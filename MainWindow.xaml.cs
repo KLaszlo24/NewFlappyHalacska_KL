@@ -39,10 +39,10 @@ namespace NewFlappyHalacska
         private void MainEventTimer(object sender, EventArgs e)
         {
             txtScore.Content = "Pontszam: " + score;
-            FlappyhalHitbox= new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width, FlappyHal.Height);
+            FlappyhalHitbox= new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width -5, FlappyHal.Height);
             Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
 
-            if (Canvas.GetTop(FlappyHal) > -10 || Canvas.GetTop(FlappyHal) > -458)
+            if (Canvas.GetTop(FlappyHal) < -10 || Canvas.GetTop(FlappyHal) > -458)
             {
                 EndGame();
             }
@@ -136,7 +136,9 @@ namespace NewFlappyHalacska
 
         private void EndGame()
         {
-
+            timer.Stop();
+            jatekvege = true;
+            txtScore.Content += " Jatek Vege! Nyomj R-t az újrajátszáshoz";
         }
     }
 }
