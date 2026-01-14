@@ -42,6 +42,11 @@ namespace NewFlappyHalacska
             FlappyhalHitbox= new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width, FlappyHal.Height);
             Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
 
+            if (Canvas.GetTop(FlappyHal) > -10 || Canvas.GetTop(FlappyHal) > -458)
+            {
+                EndGame();
+            }
+
             foreach(var x in MyCanvas.Children.OfType<Image>())
             {
                 if ((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
@@ -55,7 +60,22 @@ namespace NewFlappyHalacska
                         score += .5;
                     }
 
-                    //Hitbox jön innen
+                    Rect pipeHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    if (FlappyhalHitbox.IntersectsWith(pipeHitBox))
+                    {
+                        EndGame();
+                    }
+                }
+
+                if((string)x.Tag == "cloud")
+                {
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) - 2);
+
+                    if(Canvas.GetLeft(x) < -250)
+                    {
+                        Canvas.SetLeft(x, 550);
+                    }
                 }
             }
         }
