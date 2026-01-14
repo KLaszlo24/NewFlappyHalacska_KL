@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NewFlappyHalacska"
         mc:Ignorable="d"
         Title="FlappyHal" Height="490" Width="525">
-    <Canvas x:Name="MyCanvas" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp" Background="LightBlue">
+    <Canvas  Name="MyCanvas" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp" Background="LightBlue">
         <Image Height="145" Width="200" Source="images/clouds.png" Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
         <Image Height="145" Width="200" Source="images/clouds2.png" Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
 

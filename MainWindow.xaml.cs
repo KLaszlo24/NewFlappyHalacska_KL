@@ -38,17 +38,46 @@ namespace NewFlappyHalacska
 
         private void MainEventTimer(object sender, EventArgs e)
         {
-            
+            txtScore.Content = "Pontszam: " + score;
+            FlappyhalHitbox= new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width, FlappyHal.Height);
+            Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
+
+            foreach(var x in MyCanvas.Children.OfType<Image>())
+            {
+                if ((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
+                {
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) - 5);
+
+                    if (Canvas.GetLeft(x) < -100)
+                    {
+                        Canvas.SetLeft(x,800);
+
+                        score += .5;
+                    }
+
+                    //Hitbox jön innen
+                }
+            }
         }
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Space)
+            {
+                FlappyHal.RenderTransform = new RotateTransform(-20, FlappyHal.Width/2, FlappyHal.Height/2);
+                gravitacio = -8;
+            }
 
+            if (e.Key == Key.R && jatekvege==true)
+            {
+                StartGame();
+            }
         }
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-
+            FlappyHal.RenderTransform = new RotateTransform(5, FlappyHal.Width / 2, FlappyHal.Height / 2);
+            gravitacio = 8;
         }
 
         private void StartGame()
