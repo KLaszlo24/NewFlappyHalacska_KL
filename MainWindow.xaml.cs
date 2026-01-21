@@ -36,51 +36,61 @@ namespace NewFlappyHalacska
             StartGame();
         }
 
-        private void MainEventTimer(object sender, EventArgs e)
-        {
-            txtScore.Content = "Pontszam: " + score;
-            FlappyhalHitbox= new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width -5, FlappyHal.Height);
-            Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
+		private void MainEventTimer(object sender, EventArgs e)
+		{
+			txtScore.Content = "Score: " + score;
 
-            if (Canvas.GetTop(FlappyHal) < -10 || Canvas.GetTop(FlappyHal) > -458)
-            {
-                EndGame();
-            }
+			FlappyhalHitbox = new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width - 12, FlappyHal.Height);
 
-            foreach(var x in MyCanvas.Children.OfType<Image>())
-            {
-                if ((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
-                {
-                    Canvas.SetLeft(x, Canvas.GetLeft(x) - 5);
+			Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
 
-                    if (Canvas.GetLeft(x) < -100)
-                    {
-                        Canvas.SetLeft(x,800);
+			if (Canvas.GetTop(FlappyHal) < -30 || Canvas.GetTop(FlappyHal) + FlappyHal.Height > 460)
+			{
+				EndGame();
+			}
 
-                        score += .5;
-                    }
 
-                    Rect pipeHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+			foreach (var x in MyCanvas.Children.OfType<Image>())
+			{
+				if ((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
+				{
+					Canvas.SetLeft(x, Canvas.GetLeft(x) - 5);
 
-                    if (FlappyhalHitbox.IntersectsWith(pipeHitBox))
-                    {
-                        EndGame();
-                    }
-                }
+					if (Canvas.GetLeft(x) < -100)
+					{
+						Canvas.SetLeft(x, 800);
 
-                if((string)x.Tag == "cloud")
-                {
-                    Canvas.SetLeft(x, Canvas.GetLeft(x) - 2);
+						score += .5;
+					}
 
-                    if(Canvas.GetLeft(x) < -250)
-                    {
-                        Canvas.SetLeft(x, 550);
-                    }
-                }
-            }
-        }
+					Rect PillarHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
-        private void KeyIsDown(object sender, KeyEventArgs e)
+					if (FlappyhalHitbox.IntersectsWith(PillarHitBox))
+					{
+						EndGame();
+					}
+				}
+
+				if ((string)x.Tag == "clouds")
+				{
+					Canvas.SetLeft(x, Canvas.GetLeft(x) - 1);
+
+					if (Canvas.GetLeft(x) < -250)
+					{
+						Canvas.SetLeft(x, 550);
+
+						score += .5;
+					}
+
+				}
+
+
+			}
+
+
+		}
+
+		private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {

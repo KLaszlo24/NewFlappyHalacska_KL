@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:NewFlappyHalacska"
         mc:Ignorable="d"
         Title="FlappyHal" Height="490" Width="525">
-    <Canvas  Name="MyCanvas" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp" Background="LightBlue">
-        <Image Height="145" Width="200" Source="images/clouds.png" Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
-        <Image Height="145" Width="200" Source="images/clouds2.png" Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
+	<Canvas  Name="MyCanvas" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp" Background="LightBlue">
+		<Image Height="145" Width="200" Source="images/clouds.png" Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
+		<Image Height="145" Width="200" Source="images/clouds2.png" Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
 
-        <Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs1" Canvas.Left="70" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs1" Canvas.Left="72" Canvas.Top="-322" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs1" Canvas.Left="70" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs1" Canvas.Left="72" Canvas.Top="-322" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-        <Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs2" Canvas.Left="401" Canvas.Top="252" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs2" Canvas.Left="403" Canvas.Top="-280" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs2" Canvas.Left="401" Canvas.Top="252" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs2" Canvas.Left="403" Canvas.Top="-280" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs3" Canvas.Left="231" Canvas.Top="365" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs3" Canvas.Left="233" Canvas.Top="-167" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeBottom.png" Tag="obs3" Canvas.Left="231" Canvas.Top="365" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Image Height="390" Width="66" Source="images/pipeTop.png" Tag="obs3" Canvas.Left="233" Canvas.Top="-167" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <Image Name="FlappyHal" Height="36" Width="50" Source="images/halacskapng.png" Stretch="fill" Canvas.Left="35" Canvas.Top="135"/>
+		<Image Name="FlappyHal" Height="36" Width="50" Source="images/halacskapng.png" Stretch="fill" Canvas.Left="35" Canvas.Top="135"/>
 
-        <Label Name="txtScore" FontSize="22" FontWeight="ExtraBold" Content="Pontszam: 0"/>
+		<Label Name="txtScore" FontSize="22" FontWeight="ExtraBold" Content="Pontszam: 0"/>
 
-    </Canvas>
+	</Canvas>
 </Window>
