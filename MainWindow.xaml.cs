@@ -16,139 +16,188 @@ using System.Windows.Threading;
 
 namespace NewFlappyHalacska
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
+	public enum Difficulty
+	{
+		Easy,
+		Normal,
+		Hard
+	}
 
-        DispatcherTimer timer=new DispatcherTimer();
-        
-        double score;
-        int gravitacio;
-        bool jatekvege;
-        Rect FlappyhalHitbox;
-        public MainWindow()
-        {
-            InitializeComponent();
-            timer.Tick += MainEventTimer;
-            timer.Interval = TimeSpan.FromMilliseconds(20);
-            StartGame();
-        }
+	public partial class MainWindow : Window
+	{
+		DispatcherTimer timer = new DispatcherTimer();
+		DispatcherTimer gameOverTimer = new DispatcherTimer();
+
+		double score;
+		int gravitacio;
+		int gravityStrength;
+		bool jatekvege;
+
+		Rect FlappyhalHitbox;
+		Difficulty currentDifficulty = Difficulty.Normal;
+
+		public MainWindow()
+		{
+			InitializeComponent();
+
+			timer.Interval = TimeSpan.FromMilliseconds(20);
+			timer.Tick += MainEventTimer;
+		}
+		private void StartButton_Click(object sender, RoutedEventArgs e)
+		{
+			SetDifficulty((Difficulty)DifficultyBox.SelectedIndex);
+
+			MainMenu.Visibility = Visibility.Collapsed;
+			GameOverScreen.Visibility = Visibility.Collapsed;
+			MyCanvas.Visibility = Visibility.Visible;
+
+			StartGame();
+		}
+
+		private void SetDifficulty(Difficulty diff)
+		{
+			currentDifficulty = diff;
+
+			switch (diff)
+			{
+				case Difficulty.Easy:
+					gravityStrength = 6;
+					break;
+				case Difficulty.Normal:
+					gravityStrength = 8;
+					break;
+				case Difficulty.Hard:
+					gravityStrength = 30;
+					break;
+			}
+		}
+
+		private void StartGame()
+		{
+			MyCanvas.Focus();
+
+			score = 0;
+			jatekvege = false;
+
+			gravitacio = gravityStrength;
+			Canvas.SetTop(FlappyHal, 190);
+
+			int temp = 300;
+
+			foreach (var x in MyCanvas.Children.OfType<Image>())
+			{
+				if ((string)x.Tag == "obs1") Canvas.SetLeft(x, 500);
+				if ((string)x.Tag == "obs2") Canvas.SetLeft(x, 800);
+				if ((string)x.Tag == "obs3") Canvas.SetLeft(x, 1100);
+
+				if ((string)x.Tag == "cloud")
+				{
+					Canvas.SetLeft(x, 300 + temp);
+					temp = 800;
+				}
+			}
+
+			timer.Start();
+		}
 
 		private void MainEventTimer(object sender, EventArgs e)
 		{
 			txtScore.Content = "Score: " + score;
 
-			FlappyhalHitbox = new Rect(Canvas.GetLeft(FlappyHal), Canvas.GetTop(FlappyHal), FlappyHal.Width - 12, FlappyHal.Height);
+			FlappyhalHitbox = new Rect(
+				Canvas.GetLeft(FlappyHal),
+				Canvas.GetTop(FlappyHal),
+				FlappyHal.Width - 12,
+				FlappyHal.Height
+			);
 
 			Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
 
-			if (Canvas.GetTop(FlappyHal) < -30 || Canvas.GetTop(FlappyHal) + FlappyHal.Height > 460)
+			if (Canvas.GetTop(FlappyHal) < -30 ||
+				Canvas.GetTop(FlappyHal) + FlappyHal.Height > 460)
 			{
 				EndGame();
 			}
 
-
 			foreach (var x in MyCanvas.Children.OfType<Image>())
 			{
-				if ((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
+				if ((string)x.Tag == "obs1" ||
+					(string)x.Tag == "obs2" ||
+					(string)x.Tag == "obs3")
 				{
 					Canvas.SetLeft(x, Canvas.GetLeft(x) - 5);
 
 					if (Canvas.GetLeft(x) < -100)
 					{
 						Canvas.SetLeft(x, 800);
-
-						score += .5;
+						score += 0.5;
 					}
 
-					Rect PillarHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+					Rect pillarHitbox = new Rect(
+						Canvas.GetLeft(x),
+						Canvas.GetTop(x),
+						x.Width,
+						x.Height
+					);
 
-					if (FlappyhalHitbox.IntersectsWith(PillarHitBox))
+					if (FlappyhalHitbox.IntersectsWith(pillarHitbox))
 					{
 						EndGame();
 					}
 				}
 
-				if ((string)x.Tag == "clouds")
+				if ((string)x.Tag == "cloud")
 				{
 					Canvas.SetLeft(x, Canvas.GetLeft(x) - 1);
 
 					if (Canvas.GetLeft(x) < -250)
 					{
 						Canvas.SetLeft(x, 550);
-
-						score += .5;
 					}
-
 				}
-
-
 			}
+		}
+		private void EndGame()
+		{
+			if (jatekvege) return;
 
+			jatekvege = true;
+			timer.Stop();
 
+			GameOverScreen.Visibility = Visibility.Visible;
+
+			gameOverTimer.Interval = TimeSpan.FromSeconds(3);
+			gameOverTimer.Tick += (s, e) =>
+			{
+				gameOverTimer.Stop();
+				ShowMainMenu();
+			};
+			gameOverTimer.Start();
+		}
+
+		private void ShowMainMenu()
+		{
+			MyCanvas.Visibility = Visibility.Collapsed;
+			GameOverScreen.Visibility = Visibility.Collapsed;
+			MainMenu.Visibility = Visibility.Visible;
 		}
 
 		private void KeyIsDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                FlappyHal.RenderTransform = new RotateTransform(-20, FlappyHal.Width/2, FlappyHal.Height/2);
-                gravitacio = -8;
-            }
+		{
+			if (e.Key == Key.Space && !jatekvege)
+			{
+				FlappyHal.RenderTransform =
+					new RotateTransform(-20,
+						FlappyHal.Width / 2,
+						FlappyHal.Height / 2);
 
-            if (e.Key == Key.R && jatekvege==true)
-            {
-                StartGame();
-            }
-        }
+				gravitacio = -gravityStrength;
+			}
+		}
 
-        private void KeyIsUp(object sender, KeyEventArgs e)
-        {
-            FlappyHal.RenderTransform = new RotateTransform(5, FlappyHal.Width / 2, FlappyHal.Height / 2);
-            gravitacio = 8;
-        }
-
-        private void StartGame()
-        {
-            MyCanvas.Focus();
-
-            int temp = 300;
-            score = 0;
-
-            jatekvege= false;
-            Canvas.SetTop(FlappyHal, 190);
-
-            foreach(var x in MyCanvas.Children.OfType<Image>())
-            {
-                if((string)x.Tag == "obs1")
-                {
-                    Canvas.SetLeft(x, 500);
-                }
-                if ((string)x.Tag == "obs2")
-                {
-                    Canvas.SetLeft(x, 800);
-                }
-                if ((string)x.Tag == "obs3")
-                {
-                    Canvas.SetLeft(x, 1100);
-                }
-                if ((string)x.Tag == "cloud")
-                {
-                    Canvas.SetLeft(x, 300 + temp);
-                    temp = 800;
-                }
-            }
-
-            timer.Start();
-        }
-
-        private void EndGame()
-        {
-            timer.Stop();
-            jatekvege = true;
-            txtScore.Content += " Jatek Vege! Nyomj R-t az újrajátszáshoz";
-        }
-    }
+		private void KeyIsUp(object sender, KeyEventArgs e)
+		{
+			gravitacio = gravityStrength;
+		}
+	}
 }
