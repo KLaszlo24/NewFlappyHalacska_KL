@@ -37,9 +37,11 @@ namespace NewFlappyHalacska
 		Rect FlappyhalHitbox;
 		Difficulty currentDifficulty = Difficulty.Normal;
 
-
 		private ImageBrush normalBackground;
 		private ImageBrush hardBackground;
+
+		private Random rand = new Random();
+		private int raindropCount = 50; 
 
 		public MainWindow()
 		{
@@ -82,7 +84,7 @@ namespace NewFlappyHalacska
 					MyCanvas.Background = normalBackground;
 					break;
 				case Difficulty.Hard:
-					gravityStrength = 25;
+					gravityStrength = 20;
 					MyCanvas.Background = hardBackground;
 					break;
 			}
@@ -113,6 +115,15 @@ namespace NewFlappyHalacska
 				}
 			}
 
+			if (currentDifficulty == Difficulty.Normal)
+			{
+				StartRain();
+			}
+			else
+			{
+				RainCanvas.Children.Clear();
+			}
+
 			timer.Start();
 		}
 
@@ -123,8 +134,8 @@ namespace NewFlappyHalacska
 			FlappyhalHitbox = new Rect(
 				Canvas.GetLeft(FlappyHal),
 				Canvas.GetTop(FlappyHal),
-				FlappyHal.Width - 20,
-				FlappyHal.Height - 10
+				FlappyHal.Width - 28,
+				FlappyHal.Height - 14
 			);
 
 			Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
@@ -172,6 +183,11 @@ namespace NewFlappyHalacska
 					}
 				}
 			}
+
+			if (currentDifficulty == Difficulty.Normal)
+			{
+				UpdateRain();
+			}
 		}
 
 		private void EndGame()
@@ -215,6 +231,40 @@ namespace NewFlappyHalacska
 		private void KeyIsUp(object sender, KeyEventArgs e)
 		{
 			gravitacio = gravityStrength;
+		}
+
+		private void StartRain()
+		{
+			RainCanvas.Children.Clear();
+
+			for (int i = 0; i < raindropCount; i++)
+			{
+				Image drop = new Image()
+				{
+					Source = new BitmapImage(new Uri("pack://application:,,,/images/raindrops.png")),
+					Width = 15,
+					Height = 20,
+				};
+
+				Canvas.SetLeft(drop, rand.Next(0, (int)MyCanvas.ActualWidth));
+				Canvas.SetTop(drop, rand.Next(-500, 0));
+
+				RainCanvas.Children.Add(drop);
+			}
+		}
+
+		private void UpdateRain()
+		{
+			foreach (Image drop in RainCanvas.Children)
+			{
+				double top = Canvas.GetTop(drop) + 8; 
+				if (top > MyCanvas.ActualHeight)
+				{
+					top = -10;
+					Canvas.SetLeft(drop, rand.Next(0, (int)MyCanvas.ActualWidth));
+				}
+				Canvas.SetTop(drop, top);
+			}
 		}
 	}
 }
