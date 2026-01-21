@@ -94,7 +94,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Houses.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="images\cicapng.png" />
     <Resource Include="images\cicapng2.png" />
@@ -104,6 +106,18 @@
     <Resource Include="images\halacskapng.png" />
     <Resource Include="images\pipeBottom.png" />
     <Resource Include="images\pipeTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Houses.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Sponge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\max.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\dark.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

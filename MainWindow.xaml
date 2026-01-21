@@ -9,63 +9,48 @@
 	<Grid>
 
 		<Canvas Name="MyCanvas"
-                Background="LightBlue"
                 Focusable="True"
                 KeyDown="KeyIsDown"
                 KeyUp="KeyIsUp"
                 Visibility="Collapsed">
-
 			<Image Height="145" Width="200" Source="images/clouds.png"
                    Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
-
 			<Image Height="145" Width="200" Source="images/clouds2.png"
                    Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
-
 			<Image Height="390" Width="66" Source="images/pipeBottom.png"
                    Tag="obs1" Canvas.Left="70" Canvas.Top="210"/>
-
 			<Image Height="390" Width="66" Source="images/pipeTop.png"
                    Tag="obs1" Canvas.Left="72" Canvas.Top="-322"/>
-
 			<Image Height="390" Width="66" Source="images/pipeBottom.png"
                    Tag="obs2" Canvas.Left="401" Canvas.Top="252"/>
-
 			<Image Height="390" Width="66" Source="images/pipeTop.png"
                    Tag="obs2" Canvas.Left="403" Canvas.Top="-280"/>
-
 			<Image Height="390" Width="66" Source="images/pipeBottom.png"
                    Tag="obs3" Canvas.Left="231" Canvas.Top="365"/>
-
 			<Image Height="390" Width="66" Source="images/pipeTop.png"
                    Tag="obs3" Canvas.Left="233" Canvas.Top="-167"/>
-
 			<Image Name="FlappyHal"
-                   Height="36"
-                   Width="50"
-                   Source="images/halacskapng.png"
+                   Height="60"
+                   Width="65"
+                   Source="/images/Sponge.png"
                    Canvas.Left="35"
                    Canvas.Top="135"/>
-
 			<Label Name="txtScore"
                    FontSize="22"
                    FontWeight="Bold"
                    Content="Score: 0"/>
 		</Canvas>
 
-
 		<Grid Name="MainMenu" Background="#FF1E1E1E">
-
 			<StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Width="280">
-
 				<TextBlock Text="FLAPPY HAL"
                            FontSize="40"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
-
 				<ComboBox Name="DifficultyBox"
                           SelectedIndex="1"
                           Height="35">
@@ -73,7 +58,6 @@
 					<ComboBoxItem Content="Normál"/>
 					<ComboBoxItem Content="Nehéz"/>
 				</ComboBox>
-
 				<Button Content="Játék indítása"
                         Height="45"
                         Margin="0,20,0,0"
@@ -81,11 +65,9 @@
 			</StackPanel>
 		</Grid>
 
-
 		<Grid Name="GameOverScreen"
               Background="#AAE0E0E0"
               Visibility="Collapsed">
-
 			<TextBlock Text="GAME OVER"
                        FontSize="48"
                        FontWeight="Bold"

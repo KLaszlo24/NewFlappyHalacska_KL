@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+
 namespace NewFlappyHalacska
 {
 	public enum Difficulty
@@ -36,13 +37,25 @@ namespace NewFlappyHalacska
 		Rect FlappyhalHitbox;
 		Difficulty currentDifficulty = Difficulty.Normal;
 
+
+		private ImageBrush normalBackground;
+		private ImageBrush hardBackground;
+
 		public MainWindow()
 		{
 			InitializeComponent();
 
+			normalBackground = new ImageBrush(new BitmapImage(
+				new Uri("pack://application:,,,/images/dark.jpg")));
+			hardBackground = new ImageBrush(new BitmapImage(
+				new Uri("pack://application:,,,/images/max.jpg")));
+
+			MyCanvas.Background = normalBackground;
+
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Tick += MainEventTimer;
 		}
+
 		private void StartButton_Click(object sender, RoutedEventArgs e)
 		{
 			SetDifficulty((Difficulty)DifficultyBox.SelectedIndex);
@@ -62,12 +75,15 @@ namespace NewFlappyHalacska
 			{
 				case Difficulty.Easy:
 					gravityStrength = 6;
+					MyCanvas.Background = normalBackground;
 					break;
 				case Difficulty.Normal:
-					gravityStrength = 8;
+					gravityStrength = 10;
+					MyCanvas.Background = normalBackground;
 					break;
 				case Difficulty.Hard:
-					gravityStrength = 30;
+					gravityStrength = 25;
+					MyCanvas.Background = hardBackground;
 					break;
 			}
 		}
@@ -107,8 +123,8 @@ namespace NewFlappyHalacska
 			FlappyhalHitbox = new Rect(
 				Canvas.GetLeft(FlappyHal),
 				Canvas.GetTop(FlappyHal),
-				FlappyHal.Width - 12,
-				FlappyHal.Height
+				FlappyHal.Width - 20,
+				FlappyHal.Height - 10
 			);
 
 			Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
@@ -157,6 +173,7 @@ namespace NewFlappyHalacska
 				}
 			}
 		}
+
 		private void EndGame()
 		{
 			if (jatekvege) return;
