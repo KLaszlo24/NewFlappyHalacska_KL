@@ -15,9 +15,9 @@
                 Visibility="Collapsed">
 
 		
-			<Image Height="145" Width="200" Source="images/clouds.png"
+			<Image Height="145" Width="200" Source="images/jellyfish.png"
                    Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
-			<Image Height="145" Width="200" Source="images/clouds2.png"
+			<Image Height="145" Width="200" Source="images/fish3.png" 
                    Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
 			<Image Height="390" Width="66" Source="images/pipeBottom.png"
                    Tag="obs1" Canvas.Left="70" Canvas.Top="210"/>

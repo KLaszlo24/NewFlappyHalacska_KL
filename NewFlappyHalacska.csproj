@@ -124,6 +124,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="images\fish3.png" />
+    <Resource Include="images\fish2.png" />
+    <Resource Include="images\fish.png" />
+    <Resource Include="images\felho.png" />
+    <Resource Include="images\jellyfish.png" />
     <Content Include="sounds\easy.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
