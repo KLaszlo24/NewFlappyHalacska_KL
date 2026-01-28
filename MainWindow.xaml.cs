@@ -42,7 +42,7 @@ namespace NewFlappyHalacska
 		private ImageBrush hardBackground;
 
 		private Random rand = new Random();
-		private int raindropCount = 50;
+		private int raindropCount = 150;
 
 		MediaPlayer easyMusic = new MediaPlayer();
 		MediaPlayer normalMusic = new MediaPlayer();
@@ -259,31 +259,39 @@ namespace NewFlappyHalacska
 
 			for (int i = 0; i < raindropCount; i++)
 			{
-				Image drop = new Image()
+				Image bubble = new Image()
 				{
 					Source = new BitmapImage(
 						new Uri("pack://application:,,,/images/raindrops.png")),
-					Width = 15,
-					Height = 20
+					Width = 12,
+					Height = 12,
+					Opacity = 0.7
 				};
 
-				Canvas.SetLeft(drop, rand.Next(0, (int)MyCanvas.ActualWidth));
-				Canvas.SetTop(drop, rand.Next(-500, 0));
-				RainCanvas.Children.Add(drop);
+				Canvas.SetLeft(bubble, rand.Next(0, (int)MyCanvas.ActualWidth));
+				Canvas.SetTop(bubble, rand.Next(
+					(int)MyCanvas.ActualHeight,
+					(int)MyCanvas.ActualHeight + 300));
+
+				RainCanvas.Children.Add(bubble);
 			}
 		}
 
 		private void UpdateRain()
 		{
-			foreach (Image drop in RainCanvas.Children)
+			foreach (Image bubble in RainCanvas.Children)
 			{
-				double top = Canvas.GetTop(drop) + 8;
-				if (top > MyCanvas.ActualHeight)
+				double top = Canvas.GetTop(bubble) - rand.Next(2, 5);
+
+				double left = Canvas.GetLeft(bubble) + rand.Next(-1, 2);
+
+				if (top < -20)
 				{
-					top = -10;
-					Canvas.SetLeft(drop, rand.Next(0, (int)MyCanvas.ActualWidth));
+					top = MyCanvas.ActualHeight + rand.Next(50, 200);
+					left = rand.Next(0, (int)MyCanvas.ActualWidth);
 				}
-				Canvas.SetTop(drop, top);
+				Canvas.SetTop(bubble, top);
+				Canvas.SetLeft(bubble, left);
 			}
 		}
 	}
