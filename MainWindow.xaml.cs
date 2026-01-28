@@ -62,12 +62,12 @@ namespace NewFlappyHalacska
 			MyCanvas.Background = normalBackground;
 
 			easyMusic.Open(new Uri("sounds/easy.mp3", UriKind.Relative));
-			normalMusic.Open(new Uri("sounds/normal.mp3", UriKind.Relative));
+			normalMusic.Open(new Uri("sounds/normal1.mp3", UriKind.Relative));
 			hardMusic.Open(new Uri("sounds/hard.mp3", UriKind.Relative));
 
-			easyMusic.Volume = 50.5;
-			normalMusic.Volume = 0.5;
-			hardMusic.Volume = 0.5;
+			easyMusic.Volume = 10.5;
+			normalMusic.Volume = 10.5;
+			hardMusic.Volume = 10.5;
 
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Tick += MainEventTimer;
