@@ -50,13 +50,13 @@
 		<Grid Name="MainMenu" Background="#FF1E1E1E">
 			<StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Width="280">
-				<TextBlock Text="FLAPPY HAL"
+                        Width="375">
+				<TextBlock Text="FLAPPY SPONGE"
                            FontSize="40"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,30"/>
+                           Margin="0,0,0,30" Width="316"/>
 				<ComboBox Name="DifficultyBox"
                           SelectedIndex="1"
                           Height="35">

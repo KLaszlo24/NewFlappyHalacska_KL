@@ -37,22 +37,37 @@ namespace NewFlappyHalacska
 		Rect FlappyhalHitbox;
 		Difficulty currentDifficulty = Difficulty.Normal;
 
+		private ImageBrush easyBackground;
 		private ImageBrush normalBackground;
 		private ImageBrush hardBackground;
 
 		private Random rand = new Random();
-		private int raindropCount = 50; 
+		private int raindropCount = 50;
+
+		MediaPlayer easyMusic = new MediaPlayer();
+		MediaPlayer normalMusic = new MediaPlayer();
+		MediaPlayer hardMusic = new MediaPlayer();
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
+			easyBackground = new ImageBrush(new BitmapImage(
+				new Uri("pack://application:,,,/images/Houses.jpg")));
 			normalBackground = new ImageBrush(new BitmapImage(
 				new Uri("pack://application:,,,/images/dark.jpg")));
 			hardBackground = new ImageBrush(new BitmapImage(
 				new Uri("pack://application:,,,/images/max.jpg")));
 
 			MyCanvas.Background = normalBackground;
+
+			easyMusic.Open(new Uri("sounds/easy.mp3", UriKind.Relative));
+			normalMusic.Open(new Uri("sounds/normal.mp3", UriKind.Relative));
+			hardMusic.Open(new Uri("sounds/hard.mp3", UriKind.Relative));
+
+			easyMusic.Volume = 50.5;
+			normalMusic.Volume = 0.5;
+			hardMusic.Volume = 0.5;
 
 			timer.Interval = TimeSpan.FromMilliseconds(20);
 			timer.Tick += MainEventTimer;
@@ -69,23 +84,39 @@ namespace NewFlappyHalacska
 			StartGame();
 		}
 
+		private void StopAllMusic()
+		{
+			easyMusic.Stop();
+			normalMusic.Stop();
+			hardMusic.Stop();
+		}
+
 		private void SetDifficulty(Difficulty diff)
 		{
 			currentDifficulty = diff;
+			StopAllMusic();
 
 			switch (diff)
 			{
 				case Difficulty.Easy:
 					gravityStrength = 6;
-					MyCanvas.Background = normalBackground;
+					MyCanvas.Background = easyBackground;
+					easyMusic.Position = TimeSpan.Zero;
+					easyMusic.Play();
 					break;
+
 				case Difficulty.Normal:
 					gravityStrength = 10;
 					MyCanvas.Background = normalBackground;
+					normalMusic.Position = TimeSpan.Zero;
+					normalMusic.Play();
 					break;
+
 				case Difficulty.Hard:
 					gravityStrength = 20;
 					MyCanvas.Background = hardBackground;
+					hardMusic.Position = TimeSpan.Zero;
+					hardMusic.Play();
 					break;
 			}
 		}
@@ -96,8 +127,8 @@ namespace NewFlappyHalacska
 
 			score = 0;
 			jatekvege = false;
-
 			gravitacio = gravityStrength;
+
 			Canvas.SetTop(FlappyHal, 190);
 
 			int temp = 300;
@@ -116,13 +147,9 @@ namespace NewFlappyHalacska
 			}
 
 			if (currentDifficulty == Difficulty.Normal)
-			{
 				StartRain();
-			}
 			else
-			{
 				RainCanvas.Children.Clear();
-			}
 
 			timer.Start();
 		}
@@ -134,9 +161,8 @@ namespace NewFlappyHalacska
 			FlappyhalHitbox = new Rect(
 				Canvas.GetLeft(FlappyHal),
 				Canvas.GetTop(FlappyHal),
-				FlappyHal.Width - 28,
-				FlappyHal.Height - 14
-			);
+				FlappyHal.Width - 20,
+				FlappyHal.Height - 20);
 
 			Canvas.SetTop(FlappyHal, Canvas.GetTop(FlappyHal) + gravitacio);
 
@@ -164,13 +190,10 @@ namespace NewFlappyHalacska
 						Canvas.GetLeft(x),
 						Canvas.GetTop(x),
 						x.Width,
-						x.Height
-					);
+						x.Height);
 
 					if (FlappyhalHitbox.IntersectsWith(pillarHitbox))
-					{
 						EndGame();
-					}
 				}
 
 				if ((string)x.Tag == "cloud")
@@ -178,16 +201,12 @@ namespace NewFlappyHalacska
 					Canvas.SetLeft(x, Canvas.GetLeft(x) - 1);
 
 					if (Canvas.GetLeft(x) < -250)
-					{
 						Canvas.SetLeft(x, 550);
-					}
 				}
 			}
 
 			if (currentDifficulty == Difficulty.Normal)
-			{
 				UpdateRain();
-			}
 		}
 
 		private void EndGame()
@@ -196,6 +215,7 @@ namespace NewFlappyHalacska
 
 			jatekvege = true;
 			timer.Stop();
+			StopAllMusic();
 
 			GameOverScreen.Visibility = Visibility.Visible;
 
@@ -241,14 +261,14 @@ namespace NewFlappyHalacska
 			{
 				Image drop = new Image()
 				{
-					Source = new BitmapImage(new Uri("pack://application:,,,/images/raindrops.png")),
+					Source = new BitmapImage(
+						new Uri("pack://application:,,,/images/raindrops.png")),
 					Width = 15,
-					Height = 20,
+					Height = 20
 				};
 
 				Canvas.SetLeft(drop, rand.Next(0, (int)MyCanvas.ActualWidth));
 				Canvas.SetTop(drop, rand.Next(-500, 0));
-
 				RainCanvas.Children.Add(drop);
 			}
 		}
@@ -257,7 +277,7 @@ namespace NewFlappyHalacska
 		{
 			foreach (Image drop in RainCanvas.Children)
 			{
-				double top = Canvas.GetTop(drop) + 8; 
+				double top = Canvas.GetTop(drop) + 8;
 				if (top > MyCanvas.ActualHeight)
 				{
 					top = -10;
