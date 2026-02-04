@@ -1,7 +1,7 @@
 ﻿<Window x:Class="NewFlappyHalacska.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FlappyHal"
+        Title="FlappySponge"
         Height="490"
         Width="525"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
@@ -17,7 +17,7 @@
 		
 			<Image Height="145" Width="200" Source="images/jellyfish.png"
                    Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
-			<Image x:Name="FogImage" Height="700" Opacity="0.8" Width="600" Source="images/fog3.png"
+			<Image x:Name="FogImage" Height="700" Opacity="0.8" Width="700" Source="images/fog3.png"
                     Canvas.Right="0" Canvas.Top="0" Visibility="Collapsed" Panel.ZIndex="1000"/>
 			<Image Height="145" Width="200" Source="images/fish3.png" 
                    Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>

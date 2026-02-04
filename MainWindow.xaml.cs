@@ -284,7 +284,7 @@ namespace NewFlappyHalacska
 		{
 			foreach (Image bubble in RainCanvas.Children)
 			{
-				double top = Canvas.GetTop(bubble) - rand.Next(2, 5);
+				double top = Canvas.GetTop(bubble) - rand.Next(2, 5);//+ felfele
 
 				double left = Canvas.GetLeft(bubble) + rand.Next(-1, 2);
 
