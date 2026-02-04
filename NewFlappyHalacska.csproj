@@ -129,6 +129,9 @@
     <Resource Include="images\fish.png" />
     <Resource Include="images\felho.png" />
     <Resource Include="images\jellyfish.png" />
+    <Resource Include="images\fog.png" />
+    <Resource Include="images\fog2.png" />
+    <Resource Include="images\fog3.png" />
     <Content Include="sounds\easy.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -4,7 +4,7 @@
         Title="FlappyHal"
         Height="490"
         Width="525"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
 	<Grid>
 
@@ -17,6 +17,8 @@
 		
 			<Image Height="145" Width="200" Source="images/jellyfish.png"
                    Canvas.Left="35" Canvas.Top="180" Tag="cloud"/>
+			<Image x:Name="FogImage" Height="700" Opacity="0.8" Width="600" Source="images/fog3.png"
+                    Canvas.Right="0" Canvas.Top="0" Visibility="Collapsed" Panel.ZIndex="1000"/>
 			<Image Height="145" Width="200" Source="images/fish3.png" 
                    Canvas.Left="239" Canvas.Top="165" Tag="cloud"/>
 			<Image Height="390" Width="66" Source="images/pipeBottom.png"
@@ -58,7 +60,7 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30" Width="316"/>
 				<ComboBox Name="DifficultyBox"
-                          SelectedIndex="1"
+                          SelectedIndex="0"
                           Height="35">
 					<ComboBoxItem Content="Könnyű"/>
 					<ComboBoxItem Content="Normál"/>

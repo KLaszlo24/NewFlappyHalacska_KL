@@ -35,7 +35,7 @@ namespace NewFlappyHalacska
 		bool jatekvege;
 
 		Rect FlappyhalHitbox;
-		Difficulty currentDifficulty = Difficulty.Normal;
+		Difficulty currentDifficulty = Difficulty.Easy;
 
 		private ImageBrush easyBackground;
 		private ImageBrush normalBackground;
@@ -58,8 +58,6 @@ namespace NewFlappyHalacska
 				new Uri("pack://application:,,,/images/dark.jpg")));
 			hardBackground = new ImageBrush(new BitmapImage(
 				new Uri("pack://application:,,,/images/max.jpg")));
-
-			MyCanvas.Background = normalBackground;
 
 			easyMusic.Open(new Uri("sounds/easy.mp3", UriKind.Relative));
 			normalMusic.Open(new Uri("sounds/normal1.mp3", UriKind.Relative));
@@ -113,9 +111,10 @@ namespace NewFlappyHalacska
 					break;
 
 				case Difficulty.Hard:
-					gravityStrength = 20;
+					gravityStrength = 15;
 					MyCanvas.Background = hardBackground;
 					hardMusic.Position = TimeSpan.Zero;
+					FogImage.Visibility = Visibility.Visible;
 					hardMusic.Play();
 					break;
 			}
@@ -178,7 +177,7 @@ namespace NewFlappyHalacska
 					(string)x.Tag == "obs2" ||
 					(string)x.Tag == "obs3")
 				{
-					Canvas.SetLeft(x, Canvas.GetLeft(x) - 5);
+					Canvas.SetLeft(x, Canvas.GetLeft(x) - 5); //tickenként balra kell vigyem
 
 					if (Canvas.GetLeft(x) < -100)
 					{
@@ -187,6 +186,7 @@ namespace NewFlappyHalacska
 					}
 
 					Rect pillarHitbox = new Rect(
+						//Hitboxok a bigyóknak
 						Canvas.GetLeft(x),
 						Canvas.GetTop(x),
 						x.Width,
@@ -219,10 +219,11 @@ namespace NewFlappyHalacska
 
 			GameOverScreen.Visibility = Visibility.Visible;
 
-			gameOverTimer.Interval = TimeSpan.FromSeconds(3);
+			gameOverTimer.Interval = TimeSpan.FromSeconds(3);//3mp és főmenübe lépek
 			gameOverTimer.Tick += (s, e) =>
 			{
 				gameOverTimer.Stop();
+				//iit mutatja majd meg nekem
 				ShowMainMenu();
 			};
 			gameOverTimer.Start();
@@ -253,6 +254,8 @@ namespace NewFlappyHalacska
 			gravitacio = gravityStrength;
 		}
 
+
+		//Ez mar egy bubble :(
 		private void StartRain()
 		{
 			RainCanvas.Children.Clear();
